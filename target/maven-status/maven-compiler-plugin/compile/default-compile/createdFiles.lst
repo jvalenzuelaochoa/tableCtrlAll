@@ -1,0 +1,12 @@
+META-INF/CompilerHints
+project/benchmark/generated/MyBenchmark_jmhType.class
+project/dynamodb/App.class
+project/benchmark/BenchmarkRunner.class
+project/dynamodb/AWSDynamoDB.class
+META-INF/BenchmarkList
+project/benchmark/generated/MyBenchmark_testMethod_jmhTest.class
+project/dynamodb/Defines.class
+project/benchmark/generated/MyBenchmark_jmhType_B2.class
+project/benchmark/MyBenchmark.class
+project/benchmark/generated/MyBenchmark_jmhType_B1.class
+project/benchmark/generated/MyBenchmark_jmhType_B3.class
