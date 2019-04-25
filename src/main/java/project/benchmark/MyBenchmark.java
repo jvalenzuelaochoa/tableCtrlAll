@@ -50,10 +50,10 @@ public class MyBenchmark {
 //	private int testTime;
 
     @Param({
-//            "Users_10",
+            "Users_10",
             "Users_100",
-//            "Users_1000",
-//            "Users_5000",
+            "Users_1000",
+            "Users_5000",
             "Users_10000"
     })
     public String tableName;
@@ -86,7 +86,7 @@ public class MyBenchmark {
 
     	final String dir = System.getProperty("user.dir");
     	java.nio.file.Path tool = java.nio.file.Paths.get(dir, "scripts", "csv_to_dynamodb.py");
-        String command = "python "+ tool +" "+ tableName;
+        String command = "python3 "+ tool +" "+ tableName;
 
 
         System.out.println("current dir = " + tool);
