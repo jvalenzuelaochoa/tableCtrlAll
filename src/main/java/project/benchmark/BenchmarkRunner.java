@@ -15,7 +15,8 @@ public class BenchmarkRunner {
         Options options = new OptionsBuilder()
                 .include(MyBenchmark.class.getSimpleName())
                 .timeout(TimeValue.minutes(1))
-                .warmupIterations(3) // Default is 5
+                .measurementIterations(3)
+                .warmupIterations(2) // Default is 5
                 .warmupTime(TimeValue.seconds(5)) // Default is 10
                 .forks(1)
                 .build();

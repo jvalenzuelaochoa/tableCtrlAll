@@ -35,6 +35,7 @@ import org.openjdk.jmh.annotations.*;
 
 import project.dynamodb.AWSDynamoDB;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
@@ -49,7 +50,10 @@ public class MyBenchmark {
 //	private int testTime;
 
     @Param({
-            "Users_10",
+//            "Users_10",
+            "Users_100",
+//            "Users_1000",
+//            "Users_5000",
             "Users_10000"
     })
     public String tableName;
@@ -79,13 +83,29 @@ public class MyBenchmark {
             System.err.println("DynamoDB Exception: ");
             System.err.println(e.getMessage());
         }
-    	
+
+    	final String dir = System.getProperty("user.dir");
+    	java.nio.file.Path tool = java.nio.file.Paths.get(dir, "scripts", "csv_to_dynamodb.py");
+        String command = "python "+ tool +" "+ tableName;
+
+
+        System.out.println("current dir = " + tool);
+        System.out.println(command);
+        //Runtime.getRuntime().exec(run);
+
+        try {
+			Runtime.getRuntime().exec(command);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+
+	        System.out.println("Unable to run python command");
+		}
 //    	testTime = Integer.parseInt(sleepTime);
     }
 
 	@Benchmark
     public void testMethod() {
-        System.out.println(tableName);
+//        System.out.println(tableName);
     }
 
 //	@Benchmark

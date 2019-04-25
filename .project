@@ -24,7 +24,12 @@
 		<link>
 			<name>README.md</name>
 			<type>1</type>
-			<location>/Users/jvalenzu/Documents/UT/Algorithms/Project/tableCtrlAll/tableCtrl/README.md</location>
+			<location>C:/Users/jvalenzu/Documents/UT/Algorithms/Project/tableCtrlAll/tableCtrl/README.md</location>
+		</link>
+		<link>
+			<name>scripts</name>
+			<type>2</type>
+			<location>D:/git/tableCtrlAll/scripts</location>
 		</link>
 	</linkedResources>
 </projectDescription>
