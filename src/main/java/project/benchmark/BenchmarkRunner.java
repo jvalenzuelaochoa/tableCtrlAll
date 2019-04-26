@@ -13,7 +13,7 @@ public class BenchmarkRunner {
     public static void main(String[] args) throws RunnerException {
 
         Options options = new OptionsBuilder()
-                .include(MyBenchmark.class.getSimpleName())
+                .include(DynamoDBBenchmark.class.getSimpleName())
                 .timeout(TimeValue.minutes(1))
                 .measurementIterations(3)
                 .warmupIterations(2) // Default is 5

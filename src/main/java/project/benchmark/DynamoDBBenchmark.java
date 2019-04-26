@@ -45,7 +45,7 @@ import java.util.concurrent.TimeUnit;
 @State(Scope.Benchmark)
 
 
-public class MyBenchmark {
+public class DynamoDBBenchmark {
     
 //	private int testTime;
 
@@ -86,7 +86,7 @@ public class MyBenchmark {
 
     	final String dir = System.getProperty("user.dir");
     	java.nio.file.Path tool = java.nio.file.Paths.get(dir, "scripts", "csv_to_dynamodb.py");
-        String command = "python3 "+ tool +" "+ tableName;
+        String command = tool +" "+ tableName;
 
 
         System.out.println("current dir = " + tool);
@@ -94,7 +94,16 @@ public class MyBenchmark {
         //Runtime.getRuntime().exec(run);
 
         try {
-			Runtime.getRuntime().exec(command);
+        	String[] args = new String[] {"python3", tool.toString(), tableName};
+        	Process proc = new ProcessBuilder(args).start();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+
+	        System.out.println("Unable to run python command");
+		}
+        try {
+        	String[] args = new String[] {"/usr/local/bin/python3", tool.toString(), tableName};
+        	Process proc = new ProcessBuilder(args).start();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 
@@ -102,7 +111,7 @@ public class MyBenchmark {
 		}
 //    	testTime = Integer.parseInt(sleepTime);
     }
-
+    
 	@Benchmark
     public void testMethod() {
 //        System.out.println(tableName);
