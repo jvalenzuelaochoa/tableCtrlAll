@@ -121,10 +121,8 @@ public class DynamoDBBenchmark {
 //      Get elements to query for 
         String csvFile = java.nio.file.Paths.get(dir, "testCases", tableName + "_queries_dynamo.csv").toString();
 
-        System.out.println(csvFile);
         BufferedReader br = null;
         String line = "";
-        String cvsSplitBy = ",";
 
         try {
 
@@ -132,15 +130,15 @@ public class DynamoDBBenchmark {
             while ((line = br.readLine()) != null) {
 
                 // use comma as separator
-                String[] currentUsrAtt = line.split(cvsSplitBy);
+                String[] currentUsrAtt = line.split(",");
                 queryValues.add(currentUsrAtt[2]);
 
             }
 
         } catch (FileNotFoundException e) {
-            e.printStackTrace();
+            System.out.println("file not found");
         } catch (IOException e) {
-            e.printStackTrace();
+            System.out.println("IO Exception");
         } finally {
             if (br != null) {
                 try {
@@ -153,9 +151,10 @@ public class DynamoDBBenchmark {
     }
     
 	@Benchmark
-    public void testQuery() {
+    public void testQuery() {		
+//		System.out.println(queryValues.get(queryCounter));
+
 		dynamoDBHelper.getTableItem(tableName, "id", queryValues.get(queryCounter++), true);
-		System.out.println(queryValues.get(queryCounter));
 		if(queryCounter == queryValues.size())
 		{
 			queryCounter = 0;
