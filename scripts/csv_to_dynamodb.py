@@ -28,6 +28,7 @@ def batch_write(items):
    with db.batch_writer() as batch:
       for item in items:
          batch.put_item(Item=item)
+
 usrFile = Path().absolute()
 usrFile = usrFile / "testCases"
 usrFile = usrFile / str(sys.argv[1]+'.csv')

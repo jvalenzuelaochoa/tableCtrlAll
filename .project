@@ -31,5 +31,10 @@
 			<type>2</type>
 			<location>C:/Users/jvalenzu/git/tableCtrlAll/scripts</location>
 		</link>
+		<link>
+			<name>scripts/babyNames.txt</name>
+			<type>1</type>
+			<location>C:/Users/jvalenzu/git/tableCtrlAll/scripts/babyNames.txt</location>
+		</link>
 	</linkedResources>
 </projectDescription>

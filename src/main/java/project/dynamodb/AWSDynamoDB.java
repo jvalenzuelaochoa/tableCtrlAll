@@ -277,7 +277,7 @@ public class AWSDynamoDB {
 		}
 	}
 	
-	public Item getTableItem(String tableName, String primaryKeyId, String primaryKeyValue) {
+	public Item getTableItem(String tableName, String primaryKeyId, String primaryKeyValue, boolean silent) {
 		Table table = dynamoDB.getTable(tableName);
 		
 		Item item = new Item();
@@ -299,9 +299,12 @@ public class AWSDynamoDB {
 //			item = table.getItem("deploymentId", "deploy-123");
 			item = table.getItem(primaryKeyId, primaryKeyValue);
 //			x = table.getItem
-			System.out.println("Displaying retrieved items...");
-			System.out.println(item.toJSONPretty());
-			
+			if(!silent)
+			{
+				System.out.println("Displaying retrieved items...");
+				System.out.println(item.toJSONPretty());
+					
+			}
 		} catch (Exception e) {
 			System.err.println("Cannot retrieve items.");
 			System.err.println(e.getMessage());

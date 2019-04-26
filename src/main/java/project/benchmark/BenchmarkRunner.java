@@ -14,7 +14,7 @@ public class BenchmarkRunner {
 
         Options options = new OptionsBuilder()
                 .include(DynamoDBBenchmark.class.getSimpleName())
-                .timeout(TimeValue.minutes(1))
+                .timeout(TimeValue.minutes(3))
                 .measurementIterations(3)
                 .warmupIterations(2) // Default is 5
                 .warmupTime(TimeValue.seconds(5)) // Default is 10
