@@ -15,9 +15,11 @@ public class BenchmarkRunner {
         Options options = new OptionsBuilder()
 //                .include(DynamoDBBenchmark.class.getSimpleName())
                 .include(ListBenchmark.class.getSimpleName())
-                .timeout(TimeValue.minutes(3))
+                .include(SortedListBenchmark.class.getSimpleName())
+                .include(TreeBenchmark.class.getSimpleName())
+                .timeout(TimeValue.minutes(1))
                 .measurementIterations(3)
-                .warmupIterations(2) // Default is 5
+                .warmupIterations(1) // Default is 5
                 .warmupTime(TimeValue.seconds(5)) // Default is 10
                 .forks(1)
                 .build();

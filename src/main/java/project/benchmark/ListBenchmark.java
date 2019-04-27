@@ -2,7 +2,6 @@ package project.benchmark;
 
 import org.openjdk.jmh.annotations.*;
 
-import project.dynamodb.AWSDynamoDB;
 import project.tableCtrlManual.ListTable.ListTable;
 import project.tableCtrlManual.UsrCtrl.User;
 
