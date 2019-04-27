@@ -313,7 +313,7 @@ public class AWSDynamoDB {
 		return item;
 	}
 	
-	public ScanResult scanAndFilterTable(String tableName, String attributeValue, String filterExpression) {
+	public ScanResult scanAndFilterTable(String tableName, String attributeValue, String filterExpression, boolean silent) {
 		Table table = dynamoDB.getTable(tableName);
 		
 		Map<String, AttributeValue> expressionAttributeValues = 
@@ -329,10 +329,13 @@ public class AWSDynamoDB {
 
 
 		ScanResult result = client.scan(scanRequest);
-		System.out.println(result.toString());
-		for (Map<String, AttributeValue> item : result.getItems()) {
-//		    printItem(item);
-		    System.out.println(item.toString());
+		if(!silent)
+		{
+			System.out.println(result.toString());
+			for (Map<String, AttributeValue> item : result.getItems()) {
+	//		    printItem(item);
+			    System.out.println(item.toString());
+			}
 		}
 			
 //		ScanSpec scanSpec = new ScanSpec().withProjectionExpression("id, employee, #salary").withFilterExpression(filterExpression)

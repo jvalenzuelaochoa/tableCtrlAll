@@ -148,6 +148,39 @@ public class DynamoDBBenchmark {
                 }
             }
         }
+        
+        // Read Scan file
+        csvFile = java.nio.file.Paths.get(dir, "testCases", tableName + "_scan.csv").toString();
+
+        br = null;
+        line = "";
+
+        try {
+
+            br = new BufferedReader(new FileReader(csvFile));
+            while ((line = br.readLine()) != null) {
+
+                // use comma as separator
+                String[] currentUsrAtt = line.split(",");
+                scanAttribute.add(currentUsrAtt[0]);
+                scanOperand.add(currentUsrAtt[1]);
+                scanValues.add(currentUsrAtt[2]);
+
+            }
+
+        } catch (FileNotFoundException e) {
+            System.out.println("file not found");
+        } catch (IOException e) {
+            System.out.println("IO Exception");
+        } finally {
+            if (br != null) {
+                try {
+                    br.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
     }
     
 	@Benchmark
@@ -164,6 +197,13 @@ public class DynamoDBBenchmark {
 	
 	@Benchmark
     public void testScan() {
-//        System.out.println(tableName);
+
+		String filterExpression = scanAttribute.get(scanCounter).toLowerCase() + " " + scanOperand.get(scanCounter) + " :val";
+		System.out.println(filterExpression);
+		dynamoDBHelper.scanAndFilterTable(tableName, scanValues.get(scanCounter++), filterExpression, true);
+		if(scanCounter == scanValues.size())
+		{
+			scanCounter = 0;
+		}
     }
 }

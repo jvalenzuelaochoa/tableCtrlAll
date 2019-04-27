@@ -69,7 +69,7 @@ public class App
         try {
         	String filterExpression = "salary > :val";
         	String attributeValue = "388287";
-        	ScanResult result = dynamoDBHelper.scanAndFilterTable(tableName, attributeValue, filterExpression);
+        	ScanResult result = dynamoDBHelper.scanAndFilterTable(tableName, attributeValue, filterExpression, false);
 
         }
         catch (Exception e) {
