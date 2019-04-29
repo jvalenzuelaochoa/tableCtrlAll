@@ -23,6 +23,7 @@ public class TreeBenchmark {
 	ArrayList<String> queryValues, queryAtt;
 	ArrayList<String> scanAttribute, scanOperand, scanValues;
 	TreeTable testTable;
+	private boolean debug = BenchmarkRunner.debugRun;
 	
     @Param({
             "Users_1000",
@@ -156,13 +157,17 @@ public class TreeBenchmark {
 	@Benchmark
     public void testQuery() {
 		String queryStr = queryAtt.get(queryCounter) + " = " + queryValues.get(queryCounter);
-		System.out.println("QUERY: " + queryStr);
+
         ArrayList<User> queryResults = testTable.query(queryStr); // instead of value do :val and then theres a separate string for the value
 
-        for(User usr : queryResults)
-        {
-            System.out.println(usr);
-        }
+		if(debug)
+		{
+			System.out.println("QUERY: " + queryStr);	
+	        for(User usr : queryResults)
+	        {
+	            System.out.println(usr);
+	        }
+		}
 		queryCounter++;
 		if(queryCounter == queryValues.size())
 		{
@@ -173,14 +178,18 @@ public class TreeBenchmark {
 	
 	@Benchmark
     public void testScan() {
-		String queryStr = scanAttribute.get(scanCounter) + " " + scanOperand.get(scanCounter) + " " + scanValues.get(scanCounter);
+		String scanStr = scanAttribute.get(scanCounter) + " " + scanOperand.get(scanCounter) + " " + scanValues.get(scanCounter);
 
-        ArrayList<User> queryResults = testTable.query(queryStr); // instead of value do :val and then theres a separate string for the value
+        ArrayList<User> scanResults = testTable.scan(scanStr); // instead of value do :val and then theres a separate string for the value
 
-        for(User usr : queryResults)
-        {
-            System.out.println(usr);
-        }
+		if(debug)
+		{
+			System.out.println("QUERY: " + scanStr);	
+	        for(User usr : scanResults)
+	        {
+	            System.out.println(usr);
+	        }
+		}
 
 		scanCounter++;
 		

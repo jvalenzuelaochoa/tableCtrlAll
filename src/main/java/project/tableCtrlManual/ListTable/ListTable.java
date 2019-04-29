@@ -140,6 +140,71 @@ public class ListTable {
 
         return results;
     }
+    
+    public ArrayList<User> scan(String scanStr)
+    {
+        ArrayList<User> results= new ArrayList<User>();
+
+        String[] queryProps = scanStr.split(" ");
+        String attribute = queryProps[0];
+        String operand = queryProps[1];
+
+        User.userAttributes att = User.toAttribute(attribute);
+
+        ListRow traverser = head.get(att);
+
+        Object params;
+
+        if (att == User.userAttributes.NAME)
+        {
+            params = (String)queryProps[2];
+        }
+        else
+        {
+            params = Integer.parseInt(queryProps[2]);
+        }
+
+        while (traverser != null)
+        {
+            int comparator;
+            if ((att == User.userAttributes.NAME))
+            {
+               comparator =  ((String)traverser.getUsr().getElement(att)).compareToIgnoreCase((String) params);
+            }
+            else
+            {
+                comparator = ((Integer)traverser.getUsr().getElement(att)).compareTo((Integer) params);
+            }
+            if (operand.contains("="))
+            {
+                if (comparator == 0)
+                {
+                    results.add(traverser.getUsr());
+                }
+            }
+
+            if (operand.contains(">"))
+            {
+                if (comparator > 0)
+                {
+                    results.add(traverser.getUsr());
+                }
+            }
+
+            if (operand.contains("<"))
+            {
+                if (comparator < 0 )
+                {
+                    results.add(traverser.getUsr());
+                }
+            }
+
+            traverser = traverser.getNext(att);
+        }
+
+
+        return results;
+    }
 
     //TODO:add Remove method
 

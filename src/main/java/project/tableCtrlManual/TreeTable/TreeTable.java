@@ -152,6 +152,28 @@ public class TreeTable {
 
     }
 
+    public ArrayList<User> scan(String scanStr)
+    {
+        String[] queryProps = scanStr.split(" ");
+        String attribute = queryProps[0];
+        String operand = queryProps[1];
+
+        User.userAttributes att = User.toAttribute(attribute);
+
+        Object params;
+
+        if (att == User.userAttributes.NAME)
+        {
+            params = (String)queryProps[2];
+        }
+        else
+        {
+            params = Integer.parseInt(queryProps[2]);
+        }
+
+        return queryhelper(root.get(att), att, operand, params);
+
+    }
 
     public void displayByAttribute(User.userAttributes att)
     {

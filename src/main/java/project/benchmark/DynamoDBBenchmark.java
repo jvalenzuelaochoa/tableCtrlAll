@@ -53,10 +53,9 @@ public class DynamoDBBenchmark {
 	ArrayList<String> queryValues;
 	ArrayList<String> scanAttribute, scanOperand, scanValues;
 	AWSDynamoDB dynamoDBHelper;
+	private boolean debug = BenchmarkRunner.debugRun;
 	
     @Param({
-            "Users_1000",
-            "Users_5000",
             "Users_10000"
     })
     public String tableName;
@@ -100,8 +99,11 @@ public class DynamoDBBenchmark {
     	java.nio.file.Path tool = java.nio.file.Paths.get(dir, "scripts", "csv_to_dynamodb.py");
         String command = "python3 " + tool +" "+ tableName;
 
-        System.out.println("current dir = " + tool);
-        System.out.println(command);
+        if(debug)
+        {
+            System.out.println("current dir = " + tool);
+            System.out.println(command);
+        }
 
         try {
         	Runtime.getRuntime().exec(command);
@@ -187,7 +189,7 @@ public class DynamoDBBenchmark {
     public void testQuery() {		
 //		System.out.println(queryValues.get(queryCounter));
 
-		dynamoDBHelper.getTableItem(tableName, "id", queryValues.get(queryCounter++), true);
+		dynamoDBHelper.getTableItem(tableName, "id", queryValues.get(queryCounter++), !debug);
 		if(queryCounter == queryValues.size())
 		{
 			queryCounter = 0;
@@ -199,8 +201,12 @@ public class DynamoDBBenchmark {
     public void testScan() {
 
 		String filterExpression = scanAttribute.get(scanCounter).toLowerCase() + " " + scanOperand.get(scanCounter) + " :val";
-		System.out.println(filterExpression);
-		dynamoDBHelper.scanAndFilterTable(tableName, scanValues.get(scanCounter++), filterExpression, true);
+
+		if(debug) 
+		{
+			System.out.println(filterExpression);		
+		}
+		dynamoDBHelper.scanAndFilterTable(tableName, scanValues.get(scanCounter++), filterExpression, !debug);
 		if(scanCounter == scanValues.size())
 		{
 			scanCounter = 0;
