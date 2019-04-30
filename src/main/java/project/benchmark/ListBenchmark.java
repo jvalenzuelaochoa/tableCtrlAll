@@ -80,7 +80,7 @@ public class ListBenchmark {
         }
 
 //      Get elements to query for 
-        csvFile = java.nio.file.Paths.get(dir, "testCases", tableName + "_queries_manual.csv").toString();
+        csvFile = java.nio.file.Paths.get(dir, "testCases", tableName + "_queries_dynamo.csv").toString();
 
         br = null;
         line = "";
@@ -97,7 +97,7 @@ public class ListBenchmark {
                 	currentUsrAtt[0] = "NAME";
                 }
                 queryValues.add(currentUsrAtt[2]);
-                queryAtt.add(currentUsrAtt[0]);
+                queryAtt.add(currentUsrAtt[0].toUpperCase());
 
             }
 

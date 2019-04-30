@@ -180,6 +180,7 @@ public class ListTable {
                 if (comparator == 0)
                 {
                     results.add(traverser.getUsr());
+                    return results;
                 }
             }
 
@@ -248,7 +249,7 @@ public class ListTable {
         sampleTbl.displayByAttribute(User.userAttributes.NAME);
         sampleTbl.displayByAttribute(User.userAttributes.SALARY);
 
-        ArrayList<User> queryResults = sampleTbl.query("SALARY = 3500"); // instead of value do :val and then theres a separate string for the value
+        ArrayList<User> queryResults = sampleTbl.scan("SALARY = 3500"); // instead of value do :val and then theres a separate string for the value
 
         for(User usr : queryResults)
         {
@@ -257,7 +258,7 @@ public class ListTable {
 
         System.out.println();
 
-        queryResults = sampleTbl.query("SALARY < 3500");
+        queryResults = sampleTbl.scan("SALARY < 3500");
 
         for(User usr : queryResults)
         {
@@ -266,7 +267,7 @@ public class ListTable {
 
         System.out.println();
 
-        queryResults = sampleTbl.query("SALARY > 3500");
+        queryResults = sampleTbl.scan("SALARY > 3500");
 
         for(User usr : queryResults)
         {

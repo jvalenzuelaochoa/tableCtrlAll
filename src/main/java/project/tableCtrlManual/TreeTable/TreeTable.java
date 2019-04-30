@@ -90,6 +90,40 @@ public class TreeTable {
         {
             comparator = ((Integer)traverser.getUsr().getElement(att)).compareTo((Integer) params);
         }
+        if (comparator == 0)
+        {
+                    partialResults.add(traverser.getUsr());
+                    return partialResults;
+        }
+
+        if (comparator > 0)
+        {
+        	return queryhelper(traverser.getRight(att),att, operand, params);
+        }
+        if (comparator < 0 )
+        {
+        	return queryhelper(traverser.getLeft(att),att, operand, params);
+        }
+
+        return partialResults;
+    }
+    
+    private ArrayList<User> scanHelper(TreeRow traverser, User.userAttributes att, String operand, Object params)
+    {
+        if (traverser == null)
+        {
+            return null;
+        }
+        int comparator;
+        ArrayList<User> partialResults = new ArrayList<User>();
+        if ((att == User.userAttributes.NAME))
+        {
+            comparator =  ((String)traverser.getUsr().getElement(att)).compareToIgnoreCase((String) params);
+        }
+        else
+        {
+            comparator = ((Integer)traverser.getUsr().getElement(att)).compareTo((Integer) params);
+        }
             if (operand.contains("="))
             {
                 if (comparator == 0)
@@ -113,12 +147,12 @@ public class TreeTable {
                     partialResults.add(traverser.getUsr());
                 }
             }
-        ArrayList<User> childRes = queryhelper(traverser.getLeft(att),att, operand, params);
+        ArrayList<User> childRes = scanHelper(traverser.getLeft(att),att, operand, params);
         if (childRes != null)
         {
             partialResults.addAll(childRes);
         }
-        childRes = queryhelper(traverser.getRight(att),att, operand, params);
+        childRes = scanHelper(traverser.getRight(att),att, operand, params);
 
         if(childRes != null)
         {
@@ -171,7 +205,7 @@ public class TreeTable {
             params = Integer.parseInt(queryProps[2]);
         }
 
-        return queryhelper(root.get(att), att, operand, params);
+        return scanHelper(root.get(att), att, operand, params);
 
     }
 

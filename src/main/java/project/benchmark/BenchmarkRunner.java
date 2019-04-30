@@ -11,8 +11,8 @@ import org.openjdk.jmh.runner.options.TimeValue;
 public class BenchmarkRunner {
 
 	final public static String[] datasets = {"Users_1000",
-//											"Users_5000",
-//											"Users_10000",
+											"Users_5000",
+											"Users_10000",
 											"Users_50000"
 	};
 
