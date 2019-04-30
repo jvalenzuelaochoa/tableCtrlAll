@@ -1,5 +1,6 @@
 package project.tableCtrlManual.TreeTable;
 
+import project.tableCtrlManual.ListTable.ListTable;
 import project.tableCtrlManual.UsrCtrl.User;
 import org.junit.Test;
 
@@ -96,11 +97,11 @@ public class TreeTable {
                     return partialResults;
         }
 
-        if (comparator > 0)
+        if (comparator < 0)
         {
         	return queryhelper(traverser.getRight(att),att, operand, params);
         }
-        if (comparator < 0 )
+        if (comparator > 0 )
         {
         	return queryhelper(traverser.getLeft(att),att, operand, params);
         }
@@ -232,7 +233,7 @@ public class TreeTable {
     }
 
     @Test
-    public void notSoQuickTest()
+    public void notSoQuickQueryTest()
     {
         TreeTable sampleTbl = new TreeTable();
         sampleTbl.addUser( new User(1, "Jesus", 3500));
@@ -245,7 +246,7 @@ public class TreeTable {
         sampleTbl.displayByAttribute(User.userAttributes.NAME);
         sampleTbl.displayByAttribute(User.userAttributes.SALARY);
 
-        ArrayList<User> queryResults = sampleTbl.query("SALARY = 3500");
+        ArrayList<User> queryResults = sampleTbl.query("ID = 3");
 
         for(User usr : queryResults)
         {
@@ -254,7 +255,7 @@ public class TreeTable {
 
         System.out.println();
 
-        queryResults = sampleTbl.query("SALARY < 3500");
+        queryResults = sampleTbl.query("ID = 5");
 
         for(User usr : queryResults)
         {
@@ -263,7 +264,49 @@ public class TreeTable {
 
         System.out.println();
 
-        queryResults = sampleTbl.query("SALARY > 3500");
+        queryResults = sampleTbl.query("ID = 4");
+
+        for(User usr : queryResults)
+        {
+            System.out.println(usr);
+        }
+
+    }
+    
+    @Test
+    public void notSoQuickScanTest()
+    {
+        ListTable sampleTbl = new ListTable();
+        sampleTbl.displayByAttribute(User.userAttributes.ID);
+        sampleTbl.addUser( new User(1, "Jesus", 3500));
+        sampleTbl.addUser( new User(2, "Pedro", 200));
+        sampleTbl.addUser( new User(6, "Ochoa", 1000));
+        sampleTbl.addUser( new User(5, "Valenzuela", 10000));
+        sampleTbl.addUser( new User(3, "Mentira", 7));
+        sampleTbl.addUser( new User(4, "Javier", 750));
+        sampleTbl.displayByAttribute(User.userAttributes.ID);
+        sampleTbl.displayByAttribute(User.userAttributes.NAME);
+        sampleTbl.displayByAttribute(User.userAttributes.SALARY);
+
+        ArrayList<User> queryResults = sampleTbl.scan("SALARY = 3500"); // instead of value do :val and then theres a separate string for the value
+
+        for(User usr : queryResults)
+        {
+            System.out.println(usr);
+        }
+
+        System.out.println();
+
+        queryResults = sampleTbl.scan("SALARY < 3500");
+
+        for(User usr : queryResults)
+        {
+            System.out.println(usr);
+        }
+
+        System.out.println();
+
+        queryResults = sampleTbl.scan("SALARY > 3500");
 
         for(User usr : queryResults)
         {

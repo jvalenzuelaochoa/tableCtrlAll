@@ -26,7 +26,7 @@ public class BenchmarkRunner {
                 .include(ListBenchmark.class.getSimpleName())
                 .include(SortedListBenchmark.class.getSimpleName())
                 .include(TreeBenchmark.class.getSimpleName())
-                .timeout(TimeValue.minutes(1))
+                .timeout(TimeValue.minutes(2))
                 .param("tableName", datasets)
                 .measurementIterations(1)
                 .warmupIterations(1) // Default is 5
