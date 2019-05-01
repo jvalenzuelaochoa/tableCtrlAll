@@ -75,7 +75,7 @@ public class TreeTable {
         }
     }
 
-    private ArrayList<User> queryhelper(TreeRow traverser, User.userAttributes att, String operand, Object params)
+    private ArrayList<User> queryHelper(TreeRow traverser, User.userAttributes att, String operand, Object params)
     {
         if (traverser == null)
         {
@@ -99,11 +99,11 @@ public class TreeTable {
 
         if (comparator < 0)
         {
-        	return queryhelper(traverser.getRight(att),att, operand, params);
+        	return queryHelper(traverser.getRight(att),att, operand, params);
         }
         if (comparator > 0 )
         {
-        	return queryhelper(traverser.getLeft(att),att, operand, params);
+        	return queryHelper(traverser.getLeft(att),att, operand, params);
         }
 
         return partialResults;
@@ -116,7 +116,9 @@ public class TreeTable {
             return null;
         }
         int comparator;
+        boolean doneLeft = false;
         ArrayList<User> partialResults = new ArrayList<User>();
+        ArrayList<User> childRes;
         if ((att == User.userAttributes.NAME))
         {
             comparator =  ((String)traverser.getUsr().getElement(att)).compareToIgnoreCase((String) params);
@@ -130,6 +132,12 @@ public class TreeTable {
                 if (comparator == 0)
                 {
                     partialResults.add(traverser.getUsr());
+                    childRes = scanHelper(traverser.getLeft(att),att, operand, params);
+                    if(childRes != null)
+                    {
+                        partialResults.addAll(childRes);
+                    }
+                    doneLeft = true;
                 }
             }
 
@@ -137,8 +145,26 @@ public class TreeTable {
             {
                 if (comparator > 0)
                 {
-                    partialResults.add(traverser.getUsr());
+                    partialResults.add(traverser.getUsr()); 
+                    
+                    if (!doneLeft)
+                    {
+                    	childRes = scanHelper(traverser.getLeft(att),att, operand, params);
+                        if(childRes != null)
+                        {
+                            partialResults.addAll(childRes);
+                        }	
+                    }
+                    
                 }
+            	childRes = scanHelper(traverser.getRight(att),att, operand, params);
+                if(childRes != null)
+                {
+                    partialResults.addAll(childRes);
+                }	
+
+
+                
             }
 
             if (operand.contains("<"))
@@ -146,19 +172,24 @@ public class TreeTable {
                 if (comparator < 0 )
                 {
                     partialResults.add(traverser.getUsr());
+                    childRes = scanHelper(traverser.getRight(att),att, operand, params);
+                    if(childRes != null)
+                    {
+                        partialResults.addAll(childRes);
+                    }
+                }
+
+
+                
+                if (!doneLeft)
+                {
+                	childRes = scanHelper(traverser.getLeft(att),att, operand, params);
+                    if(childRes != null)
+                    {
+                        partialResults.addAll(childRes);
+                    }	
                 }
             }
-        ArrayList<User> childRes = scanHelper(traverser.getLeft(att),att, operand, params);
-        if (childRes != null)
-        {
-            partialResults.addAll(childRes);
-        }
-        childRes = scanHelper(traverser.getRight(att),att, operand, params);
-
-        if(childRes != null)
-        {
-            partialResults.addAll(childRes);
-        }
 
         return partialResults;
     }
@@ -183,7 +214,7 @@ public class TreeTable {
             params = Integer.parseInt(queryProps[2]);
         }
 
-        return queryhelper(root.get(att), att, operand, params);
+        return queryHelper(root.get(att), att, operand, params);
 
     }
 
