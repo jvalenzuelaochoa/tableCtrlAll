@@ -13,7 +13,8 @@ public class BenchmarkRunner {
 	final public static String[] datasets = {"Users_1000",
 											"Users_5000",
 											"Users_10000",
-											"Users_50000"
+											"Users_50000",
+											"Users_100000"
 	};
 
 	final public static boolean debugRun = false;

@@ -87,6 +87,7 @@ public class ListTable {
         User.userAttributes att = User.toAttribute(attribute);
 
         ListRow traverser = head.get(att);
+        ListRow backTraverser = tail.get(att);
 
         Object params;
 
@@ -99,9 +100,9 @@ public class ListTable {
             params = Integer.parseInt(queryProps[2]);
         }
 
-        while (traverser != null)
+        while (traverser != null && backTraverser != null)
         {
-            int comparator;
+            int comparator, backComparator;
             if ((att == User.userAttributes.NAME))
             {
                comparator =  ((String)traverser.getUsr().getElement(att)).compareToIgnoreCase((String) params);
@@ -115,26 +116,31 @@ public class ListTable {
                 if (comparator == 0)
                 {
                     results.add(traverser.getUsr());
+                    return results;
                 }
             }
 
-            if (operand.contains(">"))
+
+            if ((att == User.userAttributes.NAME))
             {
-                if (comparator > 0)
-                {
-                    results.add(traverser.getUsr());
-                }
+               backComparator =  ((String)backTraverser.getUsr().getElement(att)).compareToIgnoreCase((String) params);
             }
-
-            if (operand.contains("<"))
+            else
             {
-                if (comparator < 0 )
+                backComparator = ((Integer)backTraverser.getUsr().getElement(att)).compareTo((Integer) params);
+            }
+            if (operand.contains("="))
+            {
+                if (comparator == 0)
                 {
-                    results.add(traverser.getUsr());
+                    results.add(backTraverser.getUsr());
+                    return results;
                 }
             }
 
+            
             traverser = traverser.getNext(att);
+            backTraverser = backTraverser.getPrevious(att);
         }
 
 
@@ -180,7 +186,6 @@ public class ListTable {
                 if (comparator == 0)
                 {
                     results.add(traverser.getUsr());
-                    return results;
                 }
             }
 
